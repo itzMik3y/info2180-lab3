@@ -2,29 +2,76 @@
 document.addEventListener("DOMContentLoaded", function() {
     // Get a reference to the div element
     const board = document.getElementById("board");
+    const status=document.getElementById("status")
     const elementsArray = Array.from(board.querySelectorAll('*'));
     let lastPlayed=""
     let gameState=[[],[],[]]
+    console.log(gameState[0][0])
+    let plays=0
     let row=0
     let col=0
+    function checkWinner(board) {
+        // Check rows
+        for (let i = 0; i < 3; i++) {
+          if (board[i][0] !== '' && board[i][0] === board[i][1] && board[i][1] === board[i][2]) {
+            return board[i][0]; // Return the winning player ('X' or 'O')
+          }
+        }
+      
+        // Check columns
+        for (let j = 0; j < 3; j++) {
+          if (board[0][j] !== '' && board[0][j] === board[1][j] && board[1][j] === board[2][j]) {
+            return board[0][j];
+          }
+        }
+      
+        // Check diagonals
+        if (board[0][0] !== '' && board[0][0] === board[1][1] && board[1][1] === board[2][2]) {
+          return board[0][0];
+        }
+        if (board[0][2] !== '' && board[0][2] === board[1][1] && board[1][1] === board[2][0]) {
+          return board[0][2];
+        }
+      
+        // If no winner, return null
+        return null;
+      }
+
     function select_XO(event,row,column){
-        console.log(row,column)
-        if(lastPlayed=='X'){
-            event.target.classList.add("O")
-            event.target.textContent="O"
-            lastPlayed="O"
+        let winner=checkWinner(gameState);
+        if(winner!='X'&& winner!='O'){
+            if(lastPlayed=='X'){
+                event.target.classList.add("O")
+                gameState[row][column]="O"
+                event.target.textContent="O"
+                lastPlayed="O"
+            }
+            else if(lastPlayed=='O'){
+                event.target.classList.add("X")
+                gameState[row][column]="X"
+                event.target.textContent="X"
+                lastPlayed="X"
+               
+            }
+            else{
+                event.target.classList.add("X")
+                gameState[row][column]="X"
+                event.target.textContent="X"
+                lastPlayed="X"
+            }
+            winner=checkWinner(gameState);
+            plays++     
+
         }
-        else if(lastPlayed=='O'){
-            event.target.classList.add("X")
-            event.target.textContent="X"
-            lastPlayed="X"
-           
+        if(plays>3 && winner!=null && winner!=undefined){
+            status.textContent=`Congratulations! ${winner} is the Winner!`
+            status.classList.add('you-won')
         }
-        else{
-            event.target.classList.add("X")
-            event.target.textContent="X"
-            lastPlayed="X"
+        if(plays==9){
+            status.textContent=`DRAW`
         }
+       
+        
     }
     elementsArray.forEach(function(element, index) {
         // Apply individual styles based on the element or index
