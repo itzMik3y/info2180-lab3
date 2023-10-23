@@ -34,6 +34,13 @@ document.addEventListener("DOMContentLoaded", function() {
         element.addEventListener('click', (event) => select_XO(event, row, col));
     
         element.classList.add("square");      
+        element.addEventListener('mouseover', () => {
+            element.classList.add('hover');
+        });
+        
+        element.addEventListener('mouseout', () => {
+            element.classList.remove('hover');
+        });
     
     })
   });
