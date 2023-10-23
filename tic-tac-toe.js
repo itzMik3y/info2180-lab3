@@ -3,10 +3,10 @@ document.addEventListener("DOMContentLoaded", function() {
     // Get a reference to the div element
     const board = document.getElementById("board");
     const status=document.getElementById("status")
+    const restart=document.querySelector(".btn")
     const elementsArray = Array.from(board.querySelectorAll('*'));
     let lastPlayed=""
     let gameState=[[],[],[]]
-    console.log(gameState[0][0])
     let plays=0
     let row=0
     let col=0
@@ -73,6 +73,14 @@ document.addEventListener("DOMContentLoaded", function() {
        
         
     }
+    restart.addEventListener('click',(e)=>{
+        gameState=[[],[],[]]
+        status.textContent="Move your mouse over a square and click to play an X or an O."
+        status.classList.remove('you-won')
+        elementsArray.forEach(function(element, index) {
+            element.textContent=' '
+        })
+    })
     elementsArray.forEach(function(element, index) {
         // Apply individual styles based on the element or index
         const row = Math.floor(index / 3);
