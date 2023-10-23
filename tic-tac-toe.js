@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function select_XO(event,row,column){
         let winner=checkWinner(gameState);
-        if(winner!='X'&& winner!='O'){
+        if(winner!='X'&& winner!='O' && gameState[row][column]==undefined){
             if(lastPlayed=='X'){
                 event.target.classList.add("O")
                 gameState[row][column]="O"
